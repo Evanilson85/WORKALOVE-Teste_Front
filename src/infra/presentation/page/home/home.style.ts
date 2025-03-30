@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 interface MainProps {
-  form?: boolean;
+  $form?: boolean;
   color: string;
 }
 
@@ -35,8 +35,8 @@ export const Main = styled.main<MainProps>`
     width: 500px;
   }
 
-  ${({ form }) =>
-    form &&
+  ${({ $form }) =>
+    $form &&
     css`
       display: flex;
       align-items: center;

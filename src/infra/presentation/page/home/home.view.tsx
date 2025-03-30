@@ -1,37 +1,71 @@
+import { Field, Formik, FormikProps } from 'formik';
 import { Button } from '../../components/button/button';
+import { InputValidation } from '../../components/form/input.validation';
 import { Input } from '../../components/input';
 import { Label } from '../../components/label/label';
 import { Card } from './components/cards';
 import { Steps } from './components/steps';
 import { useHomeModel } from './home.model';
 import * as S from './home.style';
+import { TypeUser } from './schema';
 
 type TypeHomeModel = ReturnType<typeof useHomeModel>;
 
 export const Home = ({ ...props }: TypeHomeModel) => {
-  const { goToStep, stepOne, stepThree, stepTwo } = props;
+  const { goToStep, stepOne, stepThree, stepTwo, formOne } = props;
 
   return (
     <S.Page>
-      <S.Main color="#00bcff" form>
+      <S.Main color="#00bcff" $form>
         <S.TextTitle color="#fcfcfd">Cadastro do aluno</S.TextTitle>
         <Steps.container>
           <Steps.step ref={stepOne}>
-            <S.Form action="" $media={{ sm: 200, md: 600 }}>
-              <Input.root>
-                <Label text="Nome completo" htmlFor="name" />
-                <Input.text type="text" name="name" placeholder="ex: lucas do santos" />
-              </Input.root>
-              <Input.root>
-                <Label text="E-mail" htmlFor="email" />
-                <Input.text type="email" name="email" placeholder="ex: lucas@gmail.com" />
-              </Input.root>
-              <Input.root>
-                <Label text="Data de nascimento" htmlFor="date" />
-                <Input.text type="date" name="date" placeholder="ex: 25/02/2000" />
-              </Input.root>
-              <Button text="proximo" onClick={() => goToStep(2)} />
-            </S.Form>
+            <Formik
+              initialValues={formOne.initialValuesStepOne}
+              validationSchema={formOne.userSchema}
+              onSubmit={(values) => {
+                console.log(values);
+              }}
+            >
+              {(props: FormikProps<TypeUser>) => (
+                <S.Form onSubmit={props.handleSubmit} $media={{ sm: 200, md: 600 }}>
+                  <Field
+                    type="text"
+                    name="fullName"
+                    placeholder="ex: lucas do santos"
+                    label="Nome Completo"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.fullName}
+                    component={InputValidation}
+                  />
+
+                  <Field
+                    type="email"
+                    name="email"
+                    placeholder="ex: lucas@gmail.com"
+                    label="E-mail"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.email}
+                    component={InputValidation}
+                  />
+
+                  <Field
+                    type="date"
+                    name="date"
+                    placeholder="ex: 25/02/2000"
+                    label="Data de nascimento"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.date}
+                    component={InputValidation}
+                  />
+
+                  <Button text="PROXIMO" type="submit" />
+                </S.Form>
+              )}
+            </Formik>
           </Steps.step>
 
           <Steps.step ref={stepTwo}>
@@ -75,8 +109,8 @@ export const Home = ({ ...props }: TypeHomeModel) => {
           </S.Div>
           <S.row></S.row>
           <S.Div>
-            {Array.from({ length: 3 }).map(() => (
-              <Card.container>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <Card.container key={index}>
                 <Card.photo
                   alt="photo"
                   src="https://gravatar.com/avatar/85e830f239a287dbf789376d52052dee?s=200&d=mp&r=x"
