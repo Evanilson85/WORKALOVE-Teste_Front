@@ -6,9 +6,9 @@ export const useHomeModel = () => {
   const stepThree = useRef<HTMLDivElement>(null);
 
   const goToStep = (step: number) => {
-    if (step === 1) stepOne.current?.scrollIntoView({ behavior: 'smooth' });
-    if (step === 2) stepTwo.current?.scrollIntoView({ behavior: 'smooth' });
-    if (step === 3) stepThree.current?.scrollIntoView({ behavior: 'smooth' });
+    if (step === 1) stepOne.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (step === 2) stepTwo.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (step === 3) stepThree.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   return {

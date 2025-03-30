@@ -35,7 +35,7 @@ export const ProgressTrack = styled.div`
 export const ProgressFill = styled.div<ProgressProps>`
   height: 100%;
   width: ${({ step }) => (step === 1 ? '0%' : step === 2 ? '50%' : '100%')};
-  background: #6a5acd;
+  background: #1c49a5;
   transition: width 0.3s ease-in-out;
   animation: ${grow} 0.5s ease-in-out;
 `;
@@ -59,7 +59,7 @@ export const Step = styled.div<{ active: boolean }>`
   border-radius: 50%;
   font-weight: bold;
   font-size: 16px;
-  background: ${({ active }) => (active ? '#6a5acd' : '#e0e0e0')};
+  background: ${({ active }) => (active ? '#1c49a5' : '#e0e0e0')};
   color: ${({ active }) => (active ? '#fff' : '#444')};
   transition: background 0.3s ease-in-out;
 `;

@@ -1,9 +1,12 @@
 import styled, { css } from 'styled-components';
-import { breakpoints } from '../../styles/breakpoints';
 
 interface MainProps {
   form?: boolean;
   color: string;
+}
+
+interface TextProps {
+  color: '#fcfcfd' | '#444141';
 }
 
 export const Page = styled.div`
@@ -12,9 +15,7 @@ export const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
-  /* background-image: linear-gradient(to right top, rgba(219, 214, 214, 0.98), #fafafa); */
-  background-position: bottom;
+
   @media (min-width: 780px) {
     flex-direction: row;
   }
@@ -23,40 +24,66 @@ export const Page = styled.div`
 export const Main = styled.main<MainProps>`
   padding: 0;
   background-color: ${({ color }) => color};
+  background-position: bottom;
+  background-image: linear-gradient(to right top, #1c49a5, #57d9ff);
+  min-height: 750px;
+  width: 100%;
+  gap: 20px;
+
+  @media (min-width: 780px) {
+    height: 100dvh;
+    width: 500px;
+  }
+
   ${({ form }) =>
     form &&
     css`
-      height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 500px;
+      flex-direction: column;
     `}
 `;
 
+export const TextTitle = styled.h1<TextProps>`
+  color: ${({ color }) => color};
+  font-weight: 500;
+  font-size: 1.5rem;
+`;
+
 export const MainContainer = styled.main`
-  padding: 20px;
   flex: 1;
   width: 90%;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 100dvh;
+  margin: 30px auto;
+
+  @media (min-width: 780px) {
+    flex-direction: row;
+    padding: 20px;
+    margin: 0;
+  }
 `;
 
 export const ContainerDiv = styled.div`
   background-color: #ffffff;
   flex: 1;
-  height: 80%;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
-  border: 0.1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   border-radius: 6px;
 `;
 
 export const Div = styled.div`
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 7px;
+
+  @media (min-width: 780px) {
+    padding: 20px;
+    flex-direction: row;
+  }
 `;
 
 export const row = styled.hr`
@@ -74,22 +101,9 @@ export const Form = styled.form<{ $media?: Record<string, number> }>`
   width: 90%;
   margin: 0 auto;
   flex: 1;
-
   width: 400px;
 
   @media (min-width: 780px) {
     max-width: 450px;
   }
-
-  /* ${({ $media }) =>
-    $media &&
-    breakpoints
-      .filter(({ label }) => $media[label] !== undefined)
-      .map(
-        ({ label, media }) => css`
-          @media (max-width: ${media}px) {
-            width: ${$media[label]}px;
-          }
-        `
-      )} */
 `;

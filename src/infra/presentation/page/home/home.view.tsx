@@ -1,6 +1,7 @@
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input';
 import { Label } from '../../components/label/label';
+import { Card } from './components/cards';
 import { Steps } from './components/steps';
 import { useHomeModel } from './home.model';
 import * as S from './home.style';
@@ -13,6 +14,7 @@ export const Home = ({ ...props }: TypeHomeModel) => {
   return (
     <S.Page>
       <S.Main color="#00bcff" form>
+        <S.TextTitle color="#fcfcfd">Cadastro do aluno</S.TextTitle>
         <Steps.container>
           <Steps.step ref={stepOne}>
             <S.Form action="" $media={{ sm: 200, md: 600 }}>
@@ -68,9 +70,27 @@ export const Home = ({ ...props }: TypeHomeModel) => {
       </S.Main>
       <S.MainContainer>
         <S.ContainerDiv>
-          <S.Div>Meus cadastros</S.Div>
+          <S.Div>
+            <S.TextTitle color="#444141">Meus cadastros</S.TextTitle>
+          </S.Div>
           <S.row></S.row>
-          <S.Div>dasdas</S.Div>
+          <S.Div>
+            {Array.from({ length: 3 }).map(() => (
+              <Card.container>
+                <Card.photo
+                  alt="photo"
+                  src="https://gravatar.com/avatar/85e830f239a287dbf789376d52052dee?s=200&d=mp&r=x"
+                />
+                <Card.text
+                  title="João Teste"
+                  city="Diamantina - MG"
+                  date="11/04/2000"
+                  email="teste@gmail.com"
+                  key={1}
+                />
+              </Card.container>
+            ))}
+          </S.Div>
         </S.ContainerDiv>
       </S.MainContainer>
     </S.Page>
