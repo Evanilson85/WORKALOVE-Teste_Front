@@ -10,7 +10,6 @@ export const CardContainer = styled.div`
   border: 0.1px solid #e0e0e0;
   flex: 1 1 calc(33.333% - 16px);
   max-width: 400px;
-  min-width: 250px;
 `;
 
 export const CardTextContainer = styled.div`
@@ -33,7 +32,7 @@ export const CardTextRow = styled.hr`
 
 export const CardTextTitle = styled.h2`
   font-weight: 700;
-  font-size: 18px;
+  font-size: 13px;
   color: rgb(36, 35, 35);
   text-transform: capitalize;
 `;
@@ -51,6 +50,4 @@ export const CardPhotoImage = styled.img`
   height: 90px;
   object-fit: cover;
   border-radius: 6px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  border: 2px solid #ddd;
 `;

@@ -41,7 +41,8 @@ export const userSchemaThree = object({
     .required('Link é obrigatório')
     .of(
       object({
-        url: string().required('link é obrigatório'),
+        type: string().required('Rede social é obrigatório'),
+        url: string().required('link é obrigatório').max(255, 'Máximo de 255 caracteres'),
       })
     ),
 });

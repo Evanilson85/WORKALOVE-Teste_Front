@@ -10,38 +10,55 @@ interface FormState {
     course: string;
     state: string;
     city: string;
-    Photo: string;
-    link: string;
+    photo: string;
+    link: { type: string; url: string }[];
   };
+  allDataStudent: Array<FormState['data']>;
   setStep: (step: number) => void;
   setData: (newData: Partial<FormState['data']>) => void;
+  saveDataLocal: () => void;
   reset: () => void;
+  loadSavedData: () => void;
 }
 
 export const useFormStore = create<FormState>()((set) => {
-  const savedData = JSON.parse(localStorage.getItem('form') || '{}');
-
   return {
     step: 1,
-    data: savedData || {
+    data: {
       fullName: '',
       email: '',
       date: '',
       course: '',
-      cityAndState: '',
+      state: '',
+      city: '',
       institution: '',
-      link: '',
-      Photo: '',
+      link: [
+        {
+          type: '',
+          url: '',
+        },
+      ],
+      photo: '',
     },
+    allDataStudent: [],
     setStep: (step) => set({ step }),
     setData: (newData) =>
       set((state) => {
         const updatedData = { ...state.data, ...newData };
-        localStorage.setItem('form', JSON.stringify(updatedData));
         return { data: updatedData };
       }),
+    saveDataLocal: () => {
+      const state = useFormStore.getState();
+      const existingData = JSON.parse(localStorage.getItem('form') || '[]');
+      const updatedArray = [...existingData, state.data];
+      localStorage.setItem('form', JSON.stringify(updatedArray));
+      state.loadSavedData();
+    },
+    loadSavedData: () => {
+      const savedData = JSON.parse(localStorage.getItem('form') || '[]');
+      set({ allDataStudent: savedData.reverse() });
+    },
     reset: () => {
-      //   localStorage.removeItem('form');
       set({
         step: 1,
         data: {
@@ -52,8 +69,13 @@ export const useFormStore = create<FormState>()((set) => {
           state: '',
           city: '',
           institution: '',
-          link: '',
-          Photo: '',
+          link: [
+            {
+              type: '',
+              url: '',
+            },
+          ],
+          photo: '',
         },
       });
     },

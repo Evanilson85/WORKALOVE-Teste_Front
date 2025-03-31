@@ -15,7 +15,6 @@ export const StepContainer = styled.div`
 
   @media (min-width: 780px) {
     max-width: 450px;
-    height: 606px;
   }
 `;
 

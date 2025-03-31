@@ -1,6 +1,7 @@
 import { ErrorMessage, FieldProps } from 'formik';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useFormStore } from '../../../state/zustand/form.state';
 import { Input } from '../input';
 import { Label } from '../label/label';
 import * as S from './input.validation.style';
@@ -17,6 +18,14 @@ export const InputFileValidation = ({
 }: InputFileValidationProps) => {
   const [preview, setPreview] = useState<string | undefined>(undefined);
   const [previewName, setPreviewName] = useState<string>('');
+  const { data } = useFormStore();
+
+  useEffect(() => {
+    if (data.photo == '') {
+      setPreview(undefined);
+      setPreviewName('');
+    }
+  }, [data]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

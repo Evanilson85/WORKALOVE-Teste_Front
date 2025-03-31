@@ -16,7 +16,7 @@ export const InputSelect = <T extends Option>({ data, error, ...props }: InputSe
       </S.OptionSelect>
       {data.length > 0 &&
         data.map((item) => (
-          <S.OptionSelect key={item.id} value={item.id}>
+          <S.OptionSelect key={item.id} value={item.name}>
             {item.name}
           </S.OptionSelect>
         ))}

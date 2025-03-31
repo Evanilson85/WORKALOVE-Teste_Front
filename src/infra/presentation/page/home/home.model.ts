@@ -15,7 +15,8 @@ type TypeRepository = {
 };
 
 export const useHomeModel = ({ coursesUseCase, stateUseCase, cityUseCase }: TypeRepository) => {
-  const { setStep, setData } = useFormStore();
+  const { setStep, setData, saveDataLocal, reset, data, loadSavedData, allDataStudent } =
+    useFormStore();
 
   const stepOne = useRef<HTMLDivElement>(null);
   const stepTwo = useRef<HTMLDivElement>(null);
@@ -24,9 +25,20 @@ export const useHomeModel = ({ coursesUseCase, stateUseCase, cityUseCase }: Type
   const [course, setCourse] = useState<Course[]>([]);
   const [states, setstates] = useState<StateData[]>([]);
   const [city, setCity] = useState<CityData[]>([]);
+  const [link] = useState([
+    {
+      id: 1,
+      name: 'facebook',
+    },
+    {
+      id: 2,
+      name: 'LinkedIn',
+    },
+  ]);
 
   useEffect(() => {
     requestCourses();
+    loadSavedData();
   }, []);
 
   const requestCourses = async () => {
@@ -58,11 +70,19 @@ export const useHomeModel = ({ coursesUseCase, stateUseCase, cityUseCase }: Type
     if (step === 3) stepThree.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
-  const initialValuesStepOne = { date: '', email: '', fullName: '' };
+  const initialValuesStepOne = { date: data.date, email: data.email, fullName: data.fullName };
 
-  const initialValuesStepTwo = { institution: '', course: '', state: '', city: '' };
+  const initialValuesStepTwo = {
+    institution: data.institution,
+    course: data.institution,
+    state: data.state,
+    city: data.city,
+  };
 
-  const initialValuesStepThree = { photo: '', link: [{ url: '' }] };
+  const initialValuesStepThree = {
+    photo: data.photo,
+    link: [{ type: data.link[0].type, url: data.link[0].url }],
+  };
 
   return {
     stepOne,
@@ -71,11 +91,14 @@ export const useHomeModel = ({ coursesUseCase, stateUseCase, cityUseCase }: Type
     goToStep,
     setStep,
     setData,
-
+    saveDataLocal,
+    reset,
+    allDataStudent,
     course,
     states,
     requestCity,
     city,
+    link,
 
     formOne: {
       initialValuesStepOne,

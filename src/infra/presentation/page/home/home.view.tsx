@@ -15,8 +15,11 @@ type TypeHomeModel = ReturnType<typeof useHomeModel>;
 export const Home = ({ ...props }: TypeHomeModel) => {
   const {
     goToStep,
-    // setData,
+    setData,
     setStep,
+    saveDataLocal,
+    reset,
+    allDataStudent,
     course,
     stepOne,
     stepThree,
@@ -27,22 +30,23 @@ export const Home = ({ ...props }: TypeHomeModel) => {
 
     states,
     city,
+    link,
     requestCity,
   } = props;
 
   return (
     <S.Page>
       <S.Main color="#00bcff" $form>
-        <S.TextTitle color="#fcfcfd">Cadastro do aluno</S.TextTitle>
+        <S.TextTitle color="#fcfcfd">Cadastro do estudante</S.TextTitle>
         <Steps.container>
           <Steps.step ref={stepOne}>
             <Formik
+              enableReinitialize
               initialValues={formOne.initialValuesStepOne}
               validationSchema={formOne.userSchema}
               onSubmit={(values) => {
                 const numb = 2;
-                console.log(values);
-
+                setData(values);
                 goToStep(numb);
                 setStep(numb);
               }}
@@ -89,14 +93,14 @@ export const Home = ({ ...props }: TypeHomeModel) => {
 
           <Steps.step ref={stepTwo}>
             <Formik
+              enableReinitialize
               initialValues={formTwo.initialValuesStepTwo}
               validationSchema={formTwo.userSchemaTwo}
               onSubmit={(values) => {
                 const numb = 3;
-
                 setStep(numb);
                 goToStep(numb);
-                console.log(values);
+                setData(values);
               }}
             >
               {(props: FormikProps<TypeUserTwo>) => (
@@ -161,10 +165,19 @@ export const Home = ({ ...props }: TypeHomeModel) => {
 
           <Steps.step ref={stepThree}>
             <Formik
+              enableReinitialize
               initialValues={formThree.initialValuesStepThree}
               validationSchema={formThree.userSchemaThree}
-              onSubmit={(values) => {
-                console.log(values);
+              onSubmit={(values, { resetForm }) => {
+                setData(values);
+                saveDataLocal();
+                reset();
+                goToStep(1);
+                setStep(1);
+
+                setTimeout(() => {
+                  resetForm();
+                }, 100);
               }}
             >
               {(props: FormikProps<TypeUserThree>) => (
@@ -175,26 +188,40 @@ export const Home = ({ ...props }: TypeHomeModel) => {
                     {({ push }) => (
                       <S.Div>
                         {props.values.link.map((links, index) => (
-                          <S.Div key={index}>
+                          <S.DivForm key={index}>
                             <Field
-                              label={`Redes sociais ${index + 1}/2`}
                               type="text"
-                              htmlFor={`link.${index}.url`}
-                              name={`link[${index}].url`}
-                              placeholder="ex: likedin/user"
+                              name={`link[${index}].type`}
+                              placeholder="ex: Facebook"
+                              label="Selecione uma Rede social"
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
-                              value={props.values.link[index].url}
-                              component={InputValidation}
+                              value={props.values.link[index].type}
+                              data={link}
+                              component={SelectValidation}
                             />
-                          </S.Div>
+                            {props.values.link[index].type && (
+                              <Field
+                                type="text"
+                                name={`link[${index}].url`}
+                                placeholder="ex: linkedin/user"
+                                onChange={props.handleChange}
+                                onBlur={props.handleBlur}
+                                value={props.values.link[index].url}
+                                component={InputValidation}
+                              />
+                            )}
+                          </S.DivForm>
                         ))}
 
-                        <Button
-                          text="Adicionar link"
-                          type="button"
-                          onClick={() => push({ url: '' })}
-                        />
+                        {props.values.link.length < 2 && props.values.link[0]?.url && (
+                          <Button
+                            fullSpace
+                            text="Novo link"
+                            type="button"
+                            onClick={() => push({ type: '', url: '' })}
+                          />
+                        )}
                       </S.Div>
                     )}
                   </FieldArray>
@@ -213,21 +240,24 @@ export const Home = ({ ...props }: TypeHomeModel) => {
           </S.Div>
           <S.row></S.row>
           <S.Div>
-            {Array.from({ length: 3 }).map((_, index) => (
-              <Card.container key={index}>
-                <Card.photo
-                  alt="photo"
-                  src="https://gravatar.com/avatar/85e830f239a287dbf789376d52052dee?s=200&d=mp&r=x"
-                />
-                <Card.text
-                  title="João Teste"
-                  city="Diamantina - MG"
-                  date="11/04/2000"
-                  email="teste@gmail.com"
-                  key={1}
-                />
-              </Card.container>
-            ))}
+            {allDataStudent.length > 0 ? (
+              allDataStudent.map((item, index) => (
+                <Card.container key={index}>
+                  <Card.photo alt="photo" src={item.photo} />
+                  <Card.text
+                    title={item.fullName}
+                    city={`${item.city} - ${item.state}`}
+                    date={item.date}
+                    email={item.email}
+                    key={index}
+                  />
+                </Card.container>
+              ))
+            ) : (
+              <S.Div center>
+                <S.TextNotFound>Nenhum estudante encontrado</S.TextNotFound>
+              </S.Div>
+            )}
           </S.Div>
         </S.ContainerDiv>
       </S.MainContainer>

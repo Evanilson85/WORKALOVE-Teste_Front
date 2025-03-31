@@ -9,6 +9,10 @@ interface TextProps {
   color: '#fcfcfd' | '#444141';
 }
 
+interface DivProps {
+  center?: boolean;
+}
+
 export const Page = styled.div`
   background-color: #fcfcfd;
   min-height: 100vh;
@@ -33,6 +37,7 @@ export const Main = styled.main<MainProps>`
   @media (min-width: 780px) {
     height: 100dvh;
     width: 500px;
+    position: fixed;
   }
 
   ${({ $form }) =>
@@ -49,19 +54,18 @@ export const TextTitle = styled.h1<TextProps>`
   color: ${({ color }) => color};
   font-weight: 500;
   font-size: 1.5rem;
+  margin: 0 20px;
 `;
 
 export const MainContainer = styled.main`
   flex: 1;
   width: 90%;
-  margin: 0 auto;
   height: 100dvh;
-  margin: 30px auto;
 
   @media (min-width: 780px) {
-    flex-direction: row;
+    width: calc(100% - 500px);
+    margin-left: 500px;
     padding: 20px;
-    margin: 0;
   }
 `;
 
@@ -74,16 +78,30 @@ export const ContainerDiv = styled.div`
   border-radius: 6px;
 `;
 
-export const Div = styled.div`
+export const Div = styled.div<DivProps>`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   gap: 7px;
+  width: 100%;
 
   @media (min-width: 780px) {
-    padding: 20px;
     flex-direction: row;
+    align-items: end;
   }
+
+  ${({ center }) =>
+    center &&
+    css`
+      align-items: center;
+      height: 400px;
+      align-items: center;
+      justify-content: center;
+
+      @media (min-width: 780px) {
+        align-items: center;
+      }
+    `}
 `;
 
 export const row = styled.hr`
@@ -117,4 +135,8 @@ export const ContainerDivSeparator = styled.div`
 
 export const DivForm = styled.div`
   width: 100%;
+`;
+
+export const TextNotFound = styled.strong`
+  color: #444141;
 `;
