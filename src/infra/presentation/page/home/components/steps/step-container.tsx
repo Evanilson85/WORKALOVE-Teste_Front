@@ -9,7 +9,7 @@ interface StepContainerProps {
 export const StepContainer = ({ children }: StepContainerProps) => {
   return (
     <S.StepContainer>
-      <Steps.process step={1} />
+      <Steps.process />
       <S.Div>{children}</S.Div>
     </S.StepContainer>
   );

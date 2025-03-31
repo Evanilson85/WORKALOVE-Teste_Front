@@ -187,7 +187,7 @@ export const Home = ({ ...props }: TypeHomeModel) => {
                   <FieldArray name="link">
                     {({ push }) => (
                       <S.Div>
-                        {props.values.link.map((links, index) => (
+                        {props.values.link.map((_, index) => (
                           <S.DivForm key={index}>
                             <Field
                               type="text"
