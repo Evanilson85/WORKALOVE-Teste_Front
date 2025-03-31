@@ -54,7 +54,7 @@ Após o cadastro, os estudantes são exibidos em uma lista de cards lateral, atu
 
 1. Clone o repositório
 
-git clone https://github.com/Evanilson85/WORKALOVE--Teste_Front.git
+git clone https://github.com/Evanilson85/WORKALOVE-Teste_Front.git
 cd app
 
 2. Instale as dependências
