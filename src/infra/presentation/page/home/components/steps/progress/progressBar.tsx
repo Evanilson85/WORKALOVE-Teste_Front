@@ -1,10 +1,9 @@
+import { useFormStore } from '../../../../../../state/zustand/form.state';
 import * as S from './progress.style';
 
-interface ProgressProps {
-  step: number;
-}
+export const ProgressBar = () => {
+  const { step } = useFormStore();
 
-export const ProgressBar = ({ step }: ProgressProps) => {
   return (
     <S.ProgressContainer>
       <S.ProgressTrack>

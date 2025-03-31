@@ -29,7 +29,7 @@ export default tseslint.config(
       'no-undef': 'error',
       'no-console': 'warn',
       '@typescript-eslint/no-empty-object-type': 'warn',
-      'no-unused-vars': 'warn',
+      // 'no-unused-vars': 'warn',
     },
   }
 );

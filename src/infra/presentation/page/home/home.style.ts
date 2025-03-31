@@ -107,3 +107,14 @@ export const Form = styled.form<{ $media?: Record<string, number> }>`
     max-width: 450px;
   }
 `;
+
+export const ContainerDivSeparator = styled.div`
+  display: flex;
+  justify-items: center;
+  justify-content: space-between;
+  gap: 7px;
+`;
+
+export const DivForm = styled.div`
+  width: 100%;
+`;

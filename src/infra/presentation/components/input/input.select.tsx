@@ -1,17 +1,25 @@
 import { SelectHTMLAttributes } from 'react';
 import * as S from './input.style';
 
-interface InputSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {}
+type Option = { id: number | string; name: string };
 
-export const InputSelect = ({ ...props }: InputSelectProps) => {
+interface InputSelectProps<T> extends SelectHTMLAttributes<HTMLSelectElement> {
+  data: T[];
+  error: boolean;
+}
+
+export const InputSelect = <T extends Option>({ data, error, ...props }: InputSelectProps<T>) => {
   return (
-    <S.InputSelect {...props}>
-      <S.OptionSelect value="">selecione um curso</S.OptionSelect>
-      <S.OptionSelect value="1">Opção 1</S.OptionSelect>
-      <S.OptionSelect value="2">Opção 2</S.OptionSelect>
-      <S.OptionSelect value="3">Opção 3</S.OptionSelect>
-      <S.OptionSelect value="4">Opção 4</S.OptionSelect>
-      <S.OptionSelect value="5">Opção 5</S.OptionSelect>
+    <S.InputSelect {...props} $error={error}>
+      <S.OptionSelect value="" disabled>
+        Selecione uma opção
+      </S.OptionSelect>
+      {data.length > 0 &&
+        data.map((item) => (
+          <S.OptionSelect key={item.id} value={item.id}>
+            {item.name}
+          </S.OptionSelect>
+        ))}
     </S.InputSelect>
   );
 };

@@ -1,18 +1,34 @@
-import { Field, Formik, FormikProps } from 'formik';
+import { Field, FieldArray, Formik, FormikProps } from 'formik';
+import { ChangeEvent } from 'react';
 import { Button } from '../../components/button/button';
+import { InputFileValidation } from '../../components/form/file.validation';
 import { InputValidation } from '../../components/form/input.validation';
-import { Input } from '../../components/input';
-import { Label } from '../../components/label/label';
+import { SelectValidation } from '../../components/form/select.validation';
 import { Card } from './components/cards';
 import { Steps } from './components/steps';
 import { useHomeModel } from './home.model';
 import * as S from './home.style';
-import { TypeUser } from './schema';
+import { TypeUser, TypeUserThree, TypeUserTwo } from './schema';
 
 type TypeHomeModel = ReturnType<typeof useHomeModel>;
 
 export const Home = ({ ...props }: TypeHomeModel) => {
-  const { goToStep, stepOne, stepThree, stepTwo, formOne } = props;
+  const {
+    goToStep,
+    // setData,
+    setStep,
+    course,
+    stepOne,
+    stepThree,
+    stepTwo,
+    formOne,
+    formTwo,
+    formThree,
+
+    states,
+    city,
+    requestCity,
+  } = props;
 
   return (
     <S.Page>
@@ -24,7 +40,11 @@ export const Home = ({ ...props }: TypeHomeModel) => {
               initialValues={formOne.initialValuesStepOne}
               validationSchema={formOne.userSchema}
               onSubmit={(values) => {
+                const numb = 2;
                 console.log(values);
+
+                goToStep(numb);
+                setStep(numb);
               }}
             >
               {(props: FormikProps<TypeUser>) => (
@@ -61,44 +81,128 @@ export const Home = ({ ...props }: TypeHomeModel) => {
                     value={props.values.date}
                     component={InputValidation}
                   />
-
-                  <Button text="PROXIMO" type="submit" />
+                  <Button text="Proximo" type="submit" />
                 </S.Form>
               )}
             </Formik>
           </Steps.step>
 
           <Steps.step ref={stepTwo}>
-            <S.Form action="" $media={{ sm: 200, md: 600 }}>
-              <Input.root>
-                <Label text="Instituição de ensino" htmlFor="institution" />
-                <Input.text type="text" name="institution" placeholder="ex: cruzeiro do sul" />
-              </Input.root>
-              <Input.root>
-                <Label text="Cursos" htmlFor="Course" />
-                <Input.select name="Course" defaultValue={''} />
-              </Input.root>
-              <Input.root>
-                <Label text="Cidade e Estado" htmlFor="city" />
-                <Input.select name="city" defaultValue={''} />
-              </Input.root>
-              <Button text="proximo" onClick={() => goToStep(3)} />
-            </S.Form>
+            <Formik
+              initialValues={formTwo.initialValuesStepTwo}
+              validationSchema={formTwo.userSchemaTwo}
+              onSubmit={(values) => {
+                const numb = 3;
+
+                setStep(numb);
+                goToStep(numb);
+                console.log(values);
+              }}
+            >
+              {(props: FormikProps<TypeUserTwo>) => (
+                <S.Form onSubmit={props.handleSubmit} $media={{ sm: 200, md: 600 }}>
+                  <Field
+                    name="institution"
+                    placeholder="ex: cruzeiro do sul"
+                    label="Instituição de ensino"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.institution}
+                    component={InputValidation}
+                  />
+
+                  <Field
+                    type="text"
+                    name="course"
+                    placeholder="ex: developer"
+                    label="Cursos"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.course}
+                    data={course}
+                    component={SelectValidation}
+                  />
+
+                  <S.ContainerDivSeparator>
+                    <Field
+                      type="text"
+                      name="state"
+                      placeholder="ex: MG"
+                      label="Estado"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        const newValue = e.target.value;
+                        requestCity(newValue);
+                        props.handleChange(e);
+                      }}
+                      onBlur={props.handleBlur}
+                      data={states}
+                      value={props.values.state}
+                      component={SelectValidation}
+                    />
+                    <Field
+                      type="text"
+                      name="city"
+                      disabled={city.length > 0 ? false : true}
+                      placeholder="ex: Diamantina - MG"
+                      label="Cidade"
+                      onChange={props.handleChange}
+                      onBlur={props.handleBlur}
+                      data={city}
+                      value={props.values.city}
+                      component={SelectValidation}
+                    />
+                  </S.ContainerDivSeparator>
+
+                  <Button text="Proximo" type="submit" />
+                </S.Form>
+              )}
+            </Formik>
           </Steps.step>
 
           <Steps.step ref={stepThree}>
-            <S.Form action="" $media={{ sm: 200, md: 600 }}>
-              <Input.root>
-                <Label text="Foto" htmlFor="Photo" />
-                <Input.text type="file" name="Photo" placeholder="ex: cruzeiro do sul" />
-              </Input.root>
-              <Input.root>
-                <Label text="Redes sociais" htmlFor="link" />
-                <Input.text type="text" name="link" placeholder="ex: lucas@gmail.com" />
-                <Button text="adicionar link" />
-              </Input.root>
-              <Button text="proximo" onClick={() => goToStep(1)} />
-            </S.Form>
+            <Formik
+              initialValues={formThree.initialValuesStepThree}
+              validationSchema={formThree.userSchemaThree}
+              onSubmit={(values) => {
+                console.log(values);
+              }}
+            >
+              {(props: FormikProps<TypeUserThree>) => (
+                <S.Form onSubmit={props.handleSubmit} $media={{ sm: 200, md: 600 }}>
+                  <Field type="file" name="photo" label="Foto" component={InputFileValidation} />
+
+                  <FieldArray name="link">
+                    {({ push }) => (
+                      <S.Div>
+                        {props.values.link.map((links, index) => (
+                          <S.Div key={index}>
+                            <Field
+                              label={`Redes sociais ${index + 1}/2`}
+                              type="text"
+                              htmlFor={`link.${index}.url`}
+                              name={`link[${index}].url`}
+                              placeholder="ex: likedin/user"
+                              onChange={props.handleChange}
+                              onBlur={props.handleBlur}
+                              value={props.values.link[index].url}
+                              component={InputValidation}
+                            />
+                          </S.Div>
+                        ))}
+
+                        <Button
+                          text="Adicionar link"
+                          type="button"
+                          onClick={() => push({ url: '' })}
+                        />
+                      </S.Div>
+                    )}
+                  </FieldArray>
+
+                  <Button text="Salvar" type="submit" />
+                </S.Form>
+              )}
+            </Formik>
           </Steps.step>
         </Steps.container>
       </S.Main>
