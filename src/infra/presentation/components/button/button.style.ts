@@ -9,13 +9,14 @@ export const Button = styled.button<ButtonProps>`
   justify-content: center;
   align-items: center;
   display: flex;
-  background: #00bcff;
+  background: ${({ theme }) => theme.Colors.deepBlue};
   color: #fff;
   border: none;
   border-radius: 12px;
   font-size: 16px;
   height: 50px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 
   ${({ fullSpace }) =>
     fullSpace &&
@@ -24,6 +25,6 @@ export const Button = styled.button<ButtonProps>`
     `}
 
   :hover {
-    background: rgba(0, 187, 255, 0.75);
+    background: ${({ theme }) => theme.Colors.skyBlue};
   }
 `;

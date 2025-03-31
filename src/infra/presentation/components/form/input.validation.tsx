@@ -1,4 +1,4 @@
-import { ErrorMessage, FieldProps } from 'formik';
+import { ErrorMessage, FieldProps, getIn } from 'formik';
 import { Input } from '../input';
 import { Label } from '../label/label';
 import * as S from './input.validation.style';
@@ -17,6 +17,8 @@ export const InputValidation = ({
   form: { touched, errors },
   ...props
 }: InputValidationProps) => {
+  const error = getIn(errors, field.name);
+  const isTouched = getIn(touched, field.name);
   return (
     <S.InputValidationDiv>
       <Input.root>
@@ -26,7 +28,7 @@ export const InputValidation = ({
           placeholder={placeholder}
           {...field}
           {...props}
-          $error={touched[field.name] && errors[field.name] ? true : false}
+          $error={isTouched && error ? true : false}
         />
         <ErrorMessage name={field.name}>
           {(msg) => <S.InputValidationText>{msg}</S.InputValidationText>}

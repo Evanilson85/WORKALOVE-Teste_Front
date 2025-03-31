@@ -14,7 +14,7 @@ interface DivProps {
 }
 
 export const Page = styled.div`
-  background-color: #fcfcfd;
+  background-color: ${({ theme }) => theme.Colors.offWhite};
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -61,7 +61,7 @@ export const MainContainer = styled.main`
   flex: 1;
   width: 90%;
   height: 100dvh;
-
+  padding: 20px 0;
   @media (min-width: 780px) {
     width: calc(100% - 500px);
     margin-left: 500px;
@@ -70,10 +70,11 @@ export const MainContainer = styled.main`
 `;
 
 export const ContainerDiv = styled.div`
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.Colors.white};
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 20px 0;
   gap: 10px;
   border-radius: 6px;
 `;
@@ -94,7 +95,7 @@ export const Div = styled.div<DivProps>`
     center &&
     css`
       align-items: center;
-      height: 400px;
+      min-height: 400px;
       align-items: center;
       justify-content: center;
 
@@ -106,16 +107,16 @@ export const Div = styled.div<DivProps>`
 
 export const row = styled.hr`
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0);
-  border: 0.1px solid #fcfcfd;
+  border: 0.1px solid ${({ theme }) => theme.Colors.offWhite};
 `;
 
-export const Form = styled.form<{ $media?: Record<string, number> }>`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 35px;
   padding: 24px;
   border-radius: 12px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.Colors.white};
   width: 90%;
   margin: 0 auto;
   flex: 1;
@@ -138,5 +139,11 @@ export const DivForm = styled.div`
 `;
 
 export const TextNotFound = styled.strong`
-  color: #444141;
+  color: ${({ theme }) => theme.Colors.darkGray};
+`;
+
+export const ContainerGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(372px, 1fr));
+  gap: 20px;
 `;

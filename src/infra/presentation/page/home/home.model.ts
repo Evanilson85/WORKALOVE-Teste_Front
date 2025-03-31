@@ -28,7 +28,7 @@ export const useHomeModel = ({ coursesUseCase, stateUseCase, cityUseCase }: Type
   const [link] = useState([
     {
       id: 1,
-      name: 'facebook',
+      name: 'Facebook',
     },
     {
       id: 2,
@@ -99,6 +99,7 @@ export const useHomeModel = ({ coursesUseCase, stateUseCase, cityUseCase }: Type
     requestCity,
     city,
     link,
+    setCity,
 
     formOne: {
       initialValuesStepOne,

@@ -60,7 +60,6 @@ export const InputFileValidation = ({
           onChange={handleFileChange}
           preview={{
             src: preview,
-            alt: previewName,
           }}
           label={previewName}
         />

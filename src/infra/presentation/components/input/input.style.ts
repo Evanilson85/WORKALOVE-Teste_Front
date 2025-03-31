@@ -55,7 +55,7 @@ export const InputSelect = styled.select<Inputs>`
   ${({ $error }) =>
     $error &&
     css`
-      border: 1px solid #ff0000;
+      border: 1px solid ${({ theme }) => theme.Colors.redAlert};
       background-color: #fff5f5;
     `}
 `;
@@ -72,7 +72,7 @@ export const InputFileContainer = styled.div<Inputs>`
   ${({ $error }) =>
     $error &&
     css`
-      border: 1px solid #ff0000;
+      border: 1px solid ${({ theme }) => theme.Colors.redAlert};
       background-color: #fff5f5;
     `}
 `;
@@ -87,6 +87,9 @@ export const InputFileLabel = styled.label`
   display: flex;
   align-items: center;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const InputFilePreview = styled.img`

@@ -1,5 +1,6 @@
 import { Field, FieldArray, Formik, FormikProps } from 'formik';
 import { ChangeEvent } from 'react';
+
 import { Button } from '../../components/button/button';
 import { InputFileValidation } from '../../components/form/file.validation';
 import { InputValidation } from '../../components/form/input.validation';
@@ -27,10 +28,10 @@ export const Home = ({ ...props }: TypeHomeModel) => {
     formOne,
     formTwo,
     formThree,
-
     states,
     city,
     link,
+    setCity,
     requestCity,
   } = props;
 
@@ -52,7 +53,7 @@ export const Home = ({ ...props }: TypeHomeModel) => {
               }}
             >
               {(props: FormikProps<TypeUser>) => (
-                <S.Form onSubmit={props.handleSubmit} $media={{ sm: 200, md: 600 }}>
+                <S.Form onSubmit={props.handleSubmit}>
                   <Field
                     type="text"
                     name="fullName"
@@ -104,7 +105,7 @@ export const Home = ({ ...props }: TypeHomeModel) => {
               }}
             >
               {(props: FormikProps<TypeUserTwo>) => (
-                <S.Form onSubmit={props.handleSubmit} $media={{ sm: 200, md: 600 }}>
+                <S.Form onSubmit={props.handleSubmit}>
                   <Field
                     name="institution"
                     placeholder="ex: cruzeiro do sul"
@@ -174,14 +175,14 @@ export const Home = ({ ...props }: TypeHomeModel) => {
                 reset();
                 goToStep(1);
                 setStep(1);
-
+                setCity([]);
                 setTimeout(() => {
                   resetForm();
                 }, 100);
               }}
             >
               {(props: FormikProps<TypeUserThree>) => (
-                <S.Form onSubmit={props.handleSubmit} $media={{ sm: 200, md: 600 }}>
+                <S.Form onSubmit={props.handleSubmit}>
                   <Field type="file" name="photo" label="Foto" component={InputFileValidation} />
 
                   <FieldArray name="link">
@@ -190,7 +191,6 @@ export const Home = ({ ...props }: TypeHomeModel) => {
                         {props.values.link.map((_, index) => (
                           <S.DivForm key={index}>
                             <Field
-                              type="text"
                               name={`link[${index}].type`}
                               placeholder="ex: Facebook"
                               label="Selecione uma Rede social"
@@ -236,20 +236,30 @@ export const Home = ({ ...props }: TypeHomeModel) => {
       <S.MainContainer>
         <S.ContainerDiv>
           <S.Div>
-            <S.TextTitle color="#444141">Meus cadastros</S.TextTitle>
+            <S.TextTitle color="#444141">
+              {' '}
+              {allDataStudent.length > 0
+                ? `${allDataStudent.length === 1 ? '1 estudante cadastrado' : allDataStudent.length + ' estudantes cadastrados'} `
+                : 'Nenhum estudante cadastrado'}
+            </S.TextTitle>
           </S.Div>
           <S.row></S.row>
-          <S.Div>
+          <S.ContainerGrid>
             {allDataStudent.length > 0 ? (
               allDataStudent.map((item, index) => (
                 <Card.container key={index}>
                   <Card.photo alt="photo" src={item.photo} />
                   <Card.text
                     title={item.fullName}
-                    city={`${item.city} - ${item.state}`}
+                    cityAndState={`${item.city} - ${item.state}`}
                     date={item.date}
                     email={item.email}
+                    course={item.course}
+                    institution={item.institution}
+                    linkType={item.link}
+                    state={item.state}
                     key={index}
+                    index={index}
                   />
                 </Card.container>
               ))
@@ -258,7 +268,7 @@ export const Home = ({ ...props }: TypeHomeModel) => {
                 <S.TextNotFound>Nenhum estudante encontrado</S.TextNotFound>
               </S.Div>
             )}
-          </S.Div>
+          </S.ContainerGrid>
         </S.ContainerDiv>
       </S.MainContainer>
     </S.Page>

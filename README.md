@@ -75,7 +75,7 @@ Cidades e Estados: IBGE API
 
 📦 Deploy
 
-O projeto está hospedado na Vercel: Link do Deploy
+O projeto está hospedado na Vercel: [Link do Deploy](https://workalove-teste-front.vercel.app/)
 
 🐳 Docker
 
@@ -89,7 +89,7 @@ docker run -p 3300:80 app-form
 
 O aplicativo estará disponível em http://localhost:3300/.
 
-estrutura de pasta
+📂 Estrutura do Projeto
 
 app/
 ├─ public/
@@ -146,24 +146,10 @@ app/
 │ │ │ │ │ │ ├─ card-text.tsx
 │ │ │ │ │ │ ├─ card.style.ts
 │ │ │ │ │ │ └─ index.ts
-│ │ │ │ │ └─ steps/
-│ │ │ │ │ ├─ progress/
-│ │ │ │ │ │ ├─ progress.style.ts
-│ │ │ │ │ │ └─ progressBar.tsx
-│ │ │ │ │ ├─ index.ts
-│ │ │ │ │ ├─ step-container.tsx
-│ │ │ │ │ ├─ step.styles.ts
-│ │ │ │ │ └─ step.tsx
-│ │ │ │ ├─ home.model.ts
 │ │ │ │ ├─ home.page.tsx
 │ │ │ │ ├─ home.style.ts
 │ │ │ │ ├─ home.view.tsx
 │ │ │ │ └─ schema.ts
-│ │ │ ├─ styles/
-│ │ │ │ ├─ breakpoints.ts
-│ │ │ │ └─ styles.ts
-│ │ │ └─ theme/
-│ │ │ └─ theme.ts
 │ │ └─ state/
 │ │ └─ zustand/
 │ │ └─ form.state.ts
@@ -180,7 +166,5 @@ app/
 ├─ package.json
 ├─ pnpm-lock.yaml
 ├─ README.md
-├─ tsconfig.app.json
 ├─ tsconfig.json
-├─ tsconfig.node.json
 └─ vite.config.ts

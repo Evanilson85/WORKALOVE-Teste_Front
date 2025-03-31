@@ -1,9 +1,5 @@
 import { array, InferType, object, string } from 'yup';
 
-const minAge = 14;
-const minBirthDate = new Date();
-minBirthDate.setFullYear(minBirthDate.getFullYear() - minAge);
-
 export const userSchema = object({
   fullName: string()
     .trim()
@@ -42,7 +38,10 @@ export const userSchemaThree = object({
     .of(
       object({
         type: string().required('Rede social é obrigatório'),
-        url: string().required('link é obrigatório').max(255, 'Máximo de 255 caracteres'),
+        url: string()
+          .required('link é obrigatório')
+          .url('Formato de url inválido')
+          .max(255, 'Máximo de 255 caracteres'),
       })
     ),
 });

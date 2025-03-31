@@ -19,6 +19,7 @@ interface FormState {
   saveDataLocal: () => void;
   reset: () => void;
   loadSavedData: () => void;
+  deleteStudent: (index: number) => void;
 }
 
 export const useFormStore = create<FormState>()((set) => {
@@ -57,6 +58,13 @@ export const useFormStore = create<FormState>()((set) => {
     loadSavedData: () => {
       const savedData = JSON.parse(localStorage.getItem('form') || '[]');
       set({ allDataStudent: savedData.reverse() });
+    },
+    deleteStudent: (indexToDelete) => {
+      set((state) => {
+        const updatedData = state.allDataStudent.filter((_, index) => index !== indexToDelete);
+        localStorage.setItem('form', JSON.stringify(updatedData));
+        return { allDataStudent: updatedData };
+      });
     },
     reset: () => {
       set({

@@ -5,13 +5,12 @@ export const StepContainer = styled.div`
   flex-direction: column;
   width: 400px;
   justify-content: space-between;
-  background: #fafafa;
   border-radius: 12px;
   padding: 30px 0;
   transition: all 0.3s ease-in-out;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
   border: 0.1px solid #e0e0e0;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.Colors.white};
 
   @media (min-width: 780px) {
     max-width: 450px;

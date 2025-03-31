@@ -12,7 +12,7 @@ export const InputFile = ({ error, label, preview, ...props }: InputFileProps) =
     <S.InputFileContainer $error={error}>
       <S.InputFilePreview {...preview} />
       <S.InputFile type="file" id="file-upload" {...props} />
-      <S.InputFileLabel htmlFor="file-upload">
+      <S.InputFileLabel htmlFor="file-upload" title={label}>
         {label ? label : 'Selecione uma foto'}
       </S.InputFileLabel>
     </S.InputFileContainer>
