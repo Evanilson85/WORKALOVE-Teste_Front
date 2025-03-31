@@ -2,7 +2,7 @@ import { CityData, CityRepository } from '../../../domain/repositories/city.repo
 import { axiosRequest } from '../api/axios';
 import { MappersCity } from './mappers/mappers.city';
 
-const URL = 'http://servicodados.ibge.gov.br/api/v1/localidades/';
+const URL = 'https://servicodados.ibge.gov.br/api/v1/localidades/';
 
 export class AxiosCityRepository implements CityRepository {
   async getAllCity(idState: string): Promise<CityData[]> {

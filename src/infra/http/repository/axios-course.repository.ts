@@ -2,8 +2,7 @@ import { Course, CourseRepository } from '../../../domain/repositories/course.re
 import { axiosRequest } from '../api/axios';
 import { MappersCourse } from './mappers/mappers.course';
 
-const URL = 'http://dados.recife.pe.gov.br/is/api/3/action/';
-
+const URL = '/api/courses';
 export class AxiosCourseRepository implements CourseRepository {
   async getAllCourses(): Promise<Course[]> {
     const { data } = await axiosRequest({ baseUrl: URL }).get(

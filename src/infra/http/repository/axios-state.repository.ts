@@ -2,7 +2,7 @@ import { StateData, StateRepository } from '../../../domain/repositories/state.r
 import { axiosRequest } from '../api/axios';
 import { MappersState } from './mappers/mappers.state';
 
-const URL = 'http://servicodados.ibge.gov.br/api/v1/localidades/';
+const URL = 'https://servicodados.ibge.gov.br/api/v1/localidades/';
 
 export class AxiosStateRepository implements StateRepository {
   async getAllState(): Promise<StateData[]> {

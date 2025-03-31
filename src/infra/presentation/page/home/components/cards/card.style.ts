@@ -78,7 +78,12 @@ export const CardFlex = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: column;
   gap: 4px;
+
+  @media (min-width: 780px) {
+    flex-direction: row;
+  }
 `;
 
 export const ButtonDelete = styled.button`

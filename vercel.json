@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/courses",
+        "destination": "http://dados.recife.pe.gov.br/is/api/3/action/"
+      }
+    ]
+  }
+  
